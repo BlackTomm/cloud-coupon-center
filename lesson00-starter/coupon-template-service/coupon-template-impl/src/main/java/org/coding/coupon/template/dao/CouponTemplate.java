@@ -1,4 +1,4 @@
-package org.coding.coupon.template.entity;
+package org.coding.coupon.template.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
