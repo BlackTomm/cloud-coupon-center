@@ -49,6 +49,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
                 .available(true)
                 .shopId(templateInfo.getShopId())
                 .rule(templateInfo.getRule())
+                .createTime(new Date())
                 .build();
         couponTemplate = couponTemplateDao.save(couponTemplate);
 

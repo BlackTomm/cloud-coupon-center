@@ -1,5 +1,7 @@
 package org.coding.coupon.template.converter;
 
+import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.coding.coupon.template.domains.rules.TemplateRule;
@@ -17,12 +19,16 @@ public class RuleConverter implements AttributeConverter<TemplateRule, String> {
     @SneakyThrows
     @Override
     public String convertToDatabaseColumn(TemplateRule templateRule) {
-        return new ObjectMapper().writeValueAsString(templateRule);
+        return JSON.toJSONString(templateRule);
+//        return new ObjectMapper().writer().writeValueAsString(templateRule);
     }
 
     @SneakyThrows
     @Override
     public TemplateRule convertToEntityAttribute(String templateRule) {
-        return new ObjectMapper().readerFor(TemplateRule.class).readValue(templateRule);
+        return JSON.parseObject(templateRule, TemplateRule.class);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+//        return objectMapper.reader().forType(TemplateRule.class).readValue(templateRule);
     }
 }
