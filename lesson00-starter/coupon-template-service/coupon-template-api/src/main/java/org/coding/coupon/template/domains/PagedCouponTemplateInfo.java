@@ -1,6 +1,7 @@
 package org.coding.coupon.template.domains;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * Create by blacktom on 2023/10/29
  */
 @Data
+@Builder
 @AllArgsConstructor
 public class PagedCouponTemplateInfo {
     public List<CouponTemplateInfo> templates;

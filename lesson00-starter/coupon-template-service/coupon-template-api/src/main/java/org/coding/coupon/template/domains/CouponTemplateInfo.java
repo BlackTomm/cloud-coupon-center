@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 public class CouponTemplateInfo {
-    private long id;
+    private Long id;
 
     @NotNull
     private String name;
@@ -26,7 +26,7 @@ public class CouponTemplateInfo {
 
     private String type;
 
-    private long shopId;
+    private Long shopId;
 
     private TemplateRule rule;
 

@@ -9,9 +9,9 @@ CREATE TABLE IF NOT EXISTS `geekbang_coupon_db`.`coupon_template`
     `available`    boolean       NOT NULL DEFAULT false COMMENT '优惠券可用状态',
     `name`         varchar(64)   NOT NULL DEFAULT '' COMMENT '优惠券名称',
     `description`  varchar(256)  NOT NULL DEFAULT '' COMMENT '优惠券详细信息',
-    `type`         varchar(10)   NOT NULL DEFAULT '' COMMENT '优惠券类型，比如满减、随机立减、晚间双倍等等',
+    `coupon_type`         varchar(10)   NOT NULL DEFAULT '' COMMENT '优惠券类型，比如满减、随机立减、晚间双倍等等',
     `shop_id`      bigint(20) COMMENT '优惠券适用的门店，如果是空则代表全场适用',
-    `created_time` datetime      NOT NULL DEFAULT '2021-12-13 00:00:00' COMMENT '创建时间',
+    `create_time` datetime      NOT NULL DEFAULT '2021-12-13 00:00:00' COMMENT '创建时间',
     `rule`         varchar(2000) NOT NULL DEFAULT '' COMMENT '详细的使用规则',
     PRIMARY KEY (`id`),
     KEY `idx_shop_id` (`shop_id`)

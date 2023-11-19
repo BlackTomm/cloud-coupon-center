@@ -30,7 +30,7 @@ public class CouponTemplate implements Serializable {
     @Id//主键
     @GeneratedValue(strategy = GenerationType.IDENTITY)//自增
     @Column(name = "id", nullable = false)
-    private long id;
+    private Long id;
 
     @Column(name = "available", nullable = false)
     private boolean available;

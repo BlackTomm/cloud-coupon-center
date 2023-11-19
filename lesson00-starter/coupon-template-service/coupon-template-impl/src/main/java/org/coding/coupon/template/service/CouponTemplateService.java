@@ -4,6 +4,7 @@ import org.coding.coupon.template.domains.CouponTemplateInfo;
 import org.coding.coupon.template.domains.PagedCouponTemplateInfo;
 import org.coding.coupon.template.domains.TemplateSearchParams;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,5 +30,5 @@ public interface CouponTemplateService {
 
     // 批量查询
     // Map是模板ID，key是模板详情
-    Map<Long, CouponTemplateInfo> getTemplateInfoMap(Set<Long> ids);
+    Map<Long, CouponTemplateInfo> getTemplateInfoMap(Collection<Long> ids);
 }
