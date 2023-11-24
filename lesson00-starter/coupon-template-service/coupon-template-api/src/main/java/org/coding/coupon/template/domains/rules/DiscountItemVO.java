@@ -1,6 +1,5 @@
 package org.coding.coupon.template.domains.rules;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -10,14 +9,15 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class Discount {
+public class DiscountItemVO {
     /**
-     * 券门槛
+     * 当前折扣门槛
      */
     private long quota;
 
+
     /**
-     * 折扣优惠
+     * 折扣优惠，70 即 0.7 折
      */
     private long discount;
 

@@ -7,6 +7,7 @@ import org.coding.coupon.template.domains.rules.TemplateRule;
 
 import javax.validation.constraints.NotNull;
 
+
 /**
  * Description: 券批次信息，汇聚规则、创建信息
  * Create by blacktom on 2023/10/29

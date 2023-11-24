@@ -18,10 +18,14 @@
         <module>coupon-template-service</module>
         <module>coupon-template-service/coupon-template-api</module>
         <module>coupon-template-service/coupon-template-impl</module>
+        <module>coupon-calculation-servicie</module>
+        <module>coupon-calculation-servicie/coupon-calculation-api</module>
+        <module>coupon-calculation-servicie/coupon-calculation-impl</module>
     </modules>
 
     <properties>
         <jackson.version>2.14.2</jackson.version>
+        <coupon.client.version>1.0-SNAPSHOT</coupon.client.version>
     </properties>
 
     <dependencyManagement>
@@ -55,6 +59,12 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>5.1.6</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>32.0.1-jre</version>
             </dependency>
 
             <dependency>

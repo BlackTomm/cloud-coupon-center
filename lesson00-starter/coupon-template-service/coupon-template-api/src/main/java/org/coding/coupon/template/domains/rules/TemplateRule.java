@@ -1,12 +1,9 @@
 package org.coding.coupon.template.domains.rules;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -16,14 +13,22 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @Builder
-//@JsonRootName(value = "templateRule")
-//@JsonIgnoreProperties(ignoreUnknown = true)
 public class TemplateRule {
+    /**
+     * 优惠门槛
+     */
+    private long quota;
+
+    private long discount;
+
     /**
      * 折扣，存储多个折扣门槛
      */
-    private List<Discount> discountInfos;
+    private List<DiscountItemVO> discountInfos;
 
+    /**
+     * 折扣最大优惠金额
+     */
     private long highDiscount;
 
     /**
