@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,7 +38,11 @@ public class TemplateRule {
     private int limitation;
 
     /**
+     * 开始时间
+     */
+    private Date startTime;
+    /**
      * 过期时间
      */
-    private long deadline;
+    private Date endTime;
 }

@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CouponInfo {
-    private long id;
+    private String couponId;
 
     private long templateId;
 
-    private long userId;
+    private String userId;
 
     private long shopId;
 

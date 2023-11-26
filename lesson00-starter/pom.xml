@@ -21,6 +21,9 @@
         <module>coupon-calculation-servicie</module>
         <module>coupon-calculation-servicie/coupon-calculation-api</module>
         <module>coupon-calculation-servicie/coupon-calculation-impl</module>
+        <module>coupon-customer-serv</module>
+        <module>coupon-customer-serv/coupon-customer-api</module>
+        <module>coupon-customer-serv/coupon-customer-impl</module>
     </modules>
 
     <properties>
@@ -30,6 +33,21 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2020.0.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>2021.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>

@@ -7,8 +7,11 @@ import org.coding.coupon.caculation.SimulationResponse;
 import org.coding.coupon.calculation.factory.CouponTemplateFactory;
 import org.coding.coupon.calculation.service.CouponCalculationService;
 import org.coding.coupon.template.RuleTemplate;
+import org.coding.coupon.template.domains.CouponInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 /**
  * Description:
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class CouponCalculationServiceImpl implements CouponCalculationService {
     @Autowired
     private CouponTemplateFactory couponProcessorFactory;
+
     /**
      * 计算第一张券的优惠金额
      */
@@ -29,8 +33,31 @@ public class CouponCalculationServiceImpl implements CouponCalculationService {
         return ruleTemplate.calculate(shoppingComponent);
     }
 
+    /**
+     * 计算 所有券的最优金额
+     */
     @Override
     public SimulationResponse findBestCoupons(ShoppingComponent shoppingComponent) {
-        return null;
+        log.info("in | findBestCoupons : {}", JSON.toJSON(shoppingComponent));
+
+        SimulationResponse simulationResponse = new SimulationResponse();
+        long minOrderPrice = Long.MAX_VALUE;
+
+        for (CouponInfo couponInfo : shoppingComponent.getCouponInfos()) {
+            ShoppingComponent couponShoppingComponent = new ShoppingComponent();
+            couponShoppingComponent.setProducts(shoppingComponent.getProducts());
+            couponShoppingComponent.setCouponInfos(Collections.singletonList(couponInfo));
+            couponShoppingComponent = couponProcessorFactory.getTemplate(couponShoppingComponent).calculate(couponShoppingComponent);
+
+            simulationResponse.getCouponToOrderPrice().put(couponInfo.getId(), couponShoppingComponent.getOrderTotalPrice());
+
+            //计算最优惠的券
+            if (minOrderPrice > couponShoppingComponent.getOrderTotalPrice()) {
+                minOrderPrice = couponShoppingComponent.getOrderTotalPrice();
+                simulationResponse.setBestCouponId(couponInfo.getId());
+            }
+        }
+
+        return simulationResponse;
     }
 }

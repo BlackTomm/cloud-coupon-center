@@ -1,0 +1,185 @@
+package org.coding.coupon.customer.service.impl;
+
+import lombok.extern.slf4j.Slf4j;
+import org.coding.coupon.caculation.ShoppingComponent;
+import org.coding.coupon.caculation.SimulationResponse;
+import org.coding.coupon.calculation.service.CouponCalculationService;
+import org.coding.coupon.customer.dao.CouponCustomerDao;
+import org.coding.coupon.customer.domian.BaseResponse;
+import org.coding.coupon.customer.domian.SearchCoupponParam;
+import org.coding.coupon.customer.domian.SendCouponParam;
+import org.coding.coupon.customer.entity.Coupon;
+import org.coding.coupon.customer.enums.CouponStatus;
+import org.coding.coupon.customer.enums.SystemErrorCode;
+import org.coding.coupon.customer.service.CouponCustomerService;
+import org.coding.coupon.template.domains.CouponInfo;
+import org.coding.coupon.template.domains.CouponTemplateInfo;
+import org.coding.coupon.template.service.CouponTemplateService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+/**
+ * Description:
+ * Create by blacktom on 2023/11/26
+ */
+@Slf4j
+@Service
+public class CouponCustomerServiceImpl implements CouponCustomerService {
+    @Autowired
+    private CouponTemplateService templateService;
+
+    @Autowired
+    private CouponCalculationService calculationService;
+
+    @Autowired
+    private CouponCustomerDao couponCustomerDao;
+
+    @Override
+    public Coupon sendCoupons(SendCouponParam sendCouponRequest) {
+        CouponTemplateInfo couponTemplateInfo = templateService.loadTemplateInfo(sendCouponRequest.getTemplateId());
+
+        if (couponTemplateInfo == null) {
+            log.error("invalid template id = {}", sendCouponRequest.getTemplateId());
+            throw new IllegalArgumentException("Invalid template id");
+        }
+
+        //判断是否有效，不过期
+        Date endTime = couponTemplateInfo.getRule().getEndTime();
+        if (!couponTemplateInfo.isAvailable() || (endTime.before(Calendar.getInstance().getTime()))) {
+            log.error("template is not available id={} or has expired, endTime is {}", sendCouponRequest.getTemplateId(), endTime);
+            throw new IllegalArgumentException("template is unavailable");
+        }
+
+        //限制领券上限
+        long couponCount = couponCustomerDao.countByUserIdAndTemplateId(sendCouponRequest.getUserId(), sendCouponRequest.getTemplateId());
+        if (couponCount >= couponTemplateInfo.getRule().getLimitation()) {
+            log.error("current userId: {} getting same templateId :{}  exceeds rule limitation {}",
+                    sendCouponRequest.getUserId(), sendCouponRequest.getTemplateId(), couponTemplateInfo.getRule().getLimitation());
+            throw new IllegalArgumentException("user getting same templateId exceeds maximum number");
+        }
+
+        Coupon coupon = Coupon.builder().userId(sendCouponRequest.getUserId())
+                .templateId(sendCouponRequest.getTemplateId())
+                .shopId(couponTemplateInfo.getShopId())
+                .couponStatus(CouponStatus.AVAILIABLE)
+                .build();
+        couponCustomerDao.save(coupon);
+
+        return coupon;
+    }
+
+    @Override
+    public BaseResponse invalidCoupon(String userId, long couponId) {
+        BaseResponse response = new BaseResponse();
+        response.setSuccess(false);
+
+        Coupon couponExample = Coupon.builder()
+                .userId(userId)
+                .couponId(couponId)
+                .couponStatus(CouponStatus.AVAILIABLE)
+                .build();
+        Optional<Coupon> optionalCoupon = couponCustomerDao.findAll(Example.of(couponExample)).stream()
+                .findFirst();
+        if (optionalCoupon.isEmpty()) {
+            response.setDesc(SystemErrorCode.COUPON_DATA_NOT_FOUND.getDesc());
+            response.setDescCode(SystemErrorCode.COUPON_DATA_NOT_FOUND.getCode());
+            return response;
+        }
+
+        Coupon searchParam = optionalCoupon.get();
+        searchParam.setCouponStatus(CouponStatus.INVALID);
+        couponCustomerDao.save(searchParam);
+
+        response.setSuccess(true);
+        return response;
+    }
+
+    @Override
+    public List<CouponInfo> findCoupons(SearchCoupponParam searchCoupponParam) {
+        // 在真正的生产环境，这个接口需要做分页查询，并且查询条件要封装成一个类
+        Coupon coupon = Coupon.builder().userId(searchCoupponParam.getUserId())
+                .couponStatus(CouponStatus.convert(searchCoupponParam.getCouponStatus()))
+                .shopId(searchCoupponParam.getShopId())
+                .build();
+
+        //创建时间降序
+        Sort sort = Sort.by(Sort.Direction.DESC, "createTime");
+        Pageable pageable = PageRequest.of(searchCoupponParam.getPage(), searchCoupponParam.getPageSize(), sort);
+
+        List<Coupon> coupons = couponCustomerDao.findAllCoupons(Example.of(coupon), pageable);
+
+        return coupons.stream().map(CouponConverter::convertToCoupon).collect(Collectors.toList());
+    }
+
+    /**
+     * 假定只支持一张券
+     */
+    @Override
+    public ShoppingComponent useCoupon(ShoppingComponent order) {
+        checkOrderParams(order);
+
+        //查询优惠券是否可用
+        List<String> couponIds = order.getCouponInfos().stream().map(CouponInfo::getCouponId).collect(Collectors.toList());
+        List<Coupon> availableCoupons = couponCustomerDao.findCouponsByIds(order.getUserId(), couponIds, CouponStatus.AVAILIABLE);
+        if (CollectionUtils.isEmpty(availableCoupons)) {
+            log.error("useCoupon | userId could not find available coupons, order is {}", order);
+            throw new IllegalArgumentException("userId could not find available coupons in this order");
+        }
+
+        order.setCouponInfos(availableCoupons.stream().map(CouponConverter::convertToCoupon).collect(Collectors.toList()));
+
+        //计算优惠后订单金额
+        ShoppingComponent result = calculationService.calculateOrderPrice(order);
+        if (CollectionUtils.isEmpty(result.getCouponInfos())) {
+            log.error("cannot apply coupon to order, couponId={}", couponIds);
+            throw new IllegalArgumentException("coupon is not applicable to this order");
+        }
+
+        log.info("update coupon status to used, couponIds={}", couponIds);
+        for (Coupon availableCoupon : availableCoupons) {
+            availableCoupon.setCouponStatus(CouponStatus.USED);
+        }
+        couponCustomerDao.saveAll(availableCoupons);
+        return result;
+    }
+
+    @Override
+    public SimulationResponse findBestCoupons(ShoppingComponent order) {
+        checkOrderParams(order);
+
+
+        //查询优惠券是否可用
+        List<String> couponIds = order.getCouponInfos().stream().map(CouponInfo::getCouponId).collect(Collectors.toList());
+        List<Coupon> availableCoupons = couponCustomerDao.findCouponsByIds(order.getUserId(), couponIds, CouponStatus.AVAILIABLE);
+        if (CollectionUtils.isEmpty(availableCoupons)) {
+            log.error("findBestCoupons | userId could not find available coupons, order is {}", order);
+            throw new IllegalArgumentException("findBestCoupons | userId could not find available coupons in this order");
+        }
+
+        order.setCouponInfos(availableCoupons.stream().map(CouponConverter::convertToCoupon).collect(Collectors.toList()));
+
+        //计算优惠后订单金额
+        return calculationService.findBestCoupons(order);
+    }
+
+    private static void checkOrderParams(ShoppingComponent order) {
+        if (order == null || CollectionUtils.isEmpty(order.getProducts())
+                || CollectionUtils.isEmpty(order.getCouponInfos())) {
+            log.error("useCoupon | check param failed, order is {}", order);
+            throw new IllegalArgumentException("order is empty");
+        }
+
+        if (order.getCouponInfos().size() > 1) {
+            log.error("useCoupon | only can use one coupon, order is {}", order);
+            throw new IllegalArgumentException("useCoupon | this order use exceeds one coupon");
+        }
+    }
+}

@@ -10,35 +10,22 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>coupon-calculation-impl</artifactId>
+    <artifactId>coupon-customer-api</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <dependencies>
         <dependency>
-            <groupId>org.coding</groupId>
-            <artifactId>coupon-calculation-api</artifactId>
-            <version>${coupon.client.version}</version>
-            <scope>compile</scope>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>org.coding</groupId>
-            <artifactId>coupon-template-api</artifactId>
-            <version>${coupon.client.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
         </dependency>
     </dependencies>
 
