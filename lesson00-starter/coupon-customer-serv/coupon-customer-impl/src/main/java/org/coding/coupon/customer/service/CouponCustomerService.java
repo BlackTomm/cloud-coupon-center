@@ -19,7 +19,7 @@ public interface CouponCustomerService {
     Coupon sendCoupons(SendCouponParam sendCouponRequest);
 
     //作废券
-    BaseResponse invalidCoupon(String userId, long couponId);
+    BaseResponse invalidCoupon(String userId, String couponId);
 
     //查询用户券
     List<CouponInfo> findCoupons(SearchCoupponParam searchCoupponParam);

@@ -33,8 +33,8 @@ public class CouponCustomerController {
 
     //作废券
     @PostMapping("invalidCoupon")
-    public BaseResponse invalidCoupon(@RequestParam("userId") String userId, @RequestParam("couponId") long couponId) {
-        return couponCustomerService.invalidCoupon(userId,couponId);
+    public BaseResponse invalidCoupon(@RequestParam("userId") String userId, @RequestParam("couponId") String couponId) {
+        return couponCustomerService.invalidCoupon(userId, couponId);
     }
 
     //查询用户券

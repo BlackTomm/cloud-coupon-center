@@ -49,12 +49,12 @@ public class CouponCalculationServiceImpl implements CouponCalculationService {
             couponShoppingComponent.setCouponInfos(Collections.singletonList(couponInfo));
             couponShoppingComponent = couponProcessorFactory.getTemplate(couponShoppingComponent).calculate(couponShoppingComponent);
 
-            simulationResponse.getCouponToOrderPrice().put(couponInfo.getId(), couponShoppingComponent.getOrderTotalPrice());
+            simulationResponse.getCouponToOrderPrice().put(couponInfo.getCouponId(), couponShoppingComponent.getOrderTotalPrice());
 
             //计算最优惠的券
             if (minOrderPrice > couponShoppingComponent.getOrderTotalPrice()) {
                 minOrderPrice = couponShoppingComponent.getOrderTotalPrice();
-                simulationResponse.setBestCouponId(couponInfo.getId());
+                simulationResponse.setBestCouponId(couponInfo.getCouponId());
             }
         }
 

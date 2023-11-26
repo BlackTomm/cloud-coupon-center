@@ -14,7 +14,7 @@ public class SimulationResponse {
     /**
      * 最优券
      */
-    private long bestCouponId;
+    private String bestCouponId;
 
-    private Map<Long, Long> couponToOrderPrice = Maps.newHashMap();
+    private Map<String, Long> couponToOrderPrice = Maps.newHashMap();
 }

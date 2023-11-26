@@ -77,7 +77,7 @@ public class CouponCustomerServiceImpl implements CouponCustomerService {
     }
 
     @Override
-    public BaseResponse invalidCoupon(String userId, long couponId) {
+    public BaseResponse invalidCoupon(String userId, String couponId) {
         BaseResponse response = new BaseResponse();
         response.setSuccess(false);
 
