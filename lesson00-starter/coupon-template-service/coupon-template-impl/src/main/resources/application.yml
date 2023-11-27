@@ -37,3 +37,9 @@ spring:
 logging:
   level:
     com.broadview.coupon: debug
+
+## basic
+mail:
+  hostname: smtp.163.com
+  port: 25
+  from: jay.xu@example.com
