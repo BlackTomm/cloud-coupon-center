@@ -10,7 +10,7 @@ import org.coding.coupon.template.domains.CouponInfo;
 public class CouponConverter {
     public static CouponInfo convertToCoupon(Coupon coupon) {
         return CouponInfo.builder()
-                .couponId(coupon.getCouponId())
+                .couponId(String.valueOf(coupon.getCouponId()))
                 .status(coupon.getCouponStatus().getCode())
                 .templateId(coupon.getTemplateId())
                 .shopId(coupon.getShopId())

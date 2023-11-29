@@ -2,6 +2,7 @@ package org.coding.coupon.template.domains.rules;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Description:
@@ -9,6 +10,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class DiscountItemVO {
     /**
      * 当前折扣门槛

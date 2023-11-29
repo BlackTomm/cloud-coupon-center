@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @SpringBootTest
@@ -21,6 +22,19 @@ public class CouponTemplateServiceImplTest {
 
     @Test
     public void createTemplateTest() throws JsonProcessingException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 30);
+        Date endTime = calendar.getTime();
+
+        TemplateRule templateRule = TemplateRule.builder()
+                .highDiscount(10)
+                .limitation(3)
+                .quota(5)
+                .discount(2)
+                .endTime(endTime)
+                .startTime(new Date())
+                .build();
+
         CouponTemplate couponTemplate = CouponTemplate.builder()
                 .couponType(CouponType.DISCOUNT)
                 .shopId(1001L)
@@ -28,11 +42,11 @@ public class CouponTemplateServiceImplTest {
                 .name("coding-test")
                 .description("测试批次")
                 .createTime(new Date())
-                .rule(TemplateRule.builder().highDiscount(1L).limitation(3).build()).build();
+                .rule(templateRule).build();
         CouponTemplateInfo couponTemplateInfo = couponTemplateService.createTemplate(CouponTemplateConverter.convertToCouponTemplateInfo(couponTemplate));
 
         System.out.println("insert couponTemplate: " + new ObjectMapper().writeValueAsString(couponTemplateInfo));
 
-        System.out.println("select couponTemplate:" + new ObjectMapper().writeValueAsString(couponTemplateService.loadTemplateInfo(1)));
+        System.out.println("select couponTemplate:" + new ObjectMapper().writeValueAsString(couponTemplateService.loadTemplateInfo(couponTemplateInfo.getId())));
     }
 }

@@ -31,7 +31,7 @@ public class CouponTemplateController {
     }
 
 
-    @PostMapping("cloneTemplate")
+    @GetMapping("cloneTemplate")
     public CouponTemplateInfo cloneTemplate(@Valid @RequestParam("id") Long templateId) {
         log.info("Clone coupon template: id={}", templateId);
         return couponTemplateService.cloneTemplate(templateId);
@@ -44,7 +44,7 @@ public class CouponTemplateController {
         return couponTemplateService.loadTemplateInfo(templateId);
     }
 
-    @GetMapping("/batchLoadTemplate")
+    @PostMapping("/batchLoadTemplate")
     public Map<Long, CouponTemplateInfo> batchLoadTemplate(@RequestParam("ids") Collection<Long> ids) {
         try {
             log.info("getTemplateInBatch: {}", new ObjectMapper().writeValueAsString(ids));

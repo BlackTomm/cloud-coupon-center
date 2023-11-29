@@ -11,10 +11,9 @@
     </parent>
 
     <artifactId>coupon-customer-impl</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
@@ -22,37 +21,39 @@
             <groupId>org.coding</groupId>
             <artifactId>coupon-customer-api</artifactId>
             <version>${coupon.client.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.coding</groupId>
             <artifactId>coupon-template-api</artifactId>
             <version>${coupon.client.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.coding</groupId>
             <artifactId>coupon-calculation-api</artifactId>
             <version>${coupon.client.version}</version>
-            <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.coding</groupId>
-            <artifactId>coupon-template-impl</artifactId>
-            <version>${coupon.client.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.coding</groupId>
-            <artifactId>coupon-calculation-impl</artifactId>
-            <version>${coupon.client.version}</version>
-            <scope>compile</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.coding</groupId>-->
+<!--            <artifactId>coupon-template-impl</artifactId>-->
+<!--            <version>${coupon.client.version}</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.coding</groupId>-->
+<!--            <artifactId>coupon-calculation-impl</artifactId>-->
+<!--            <version>${coupon.client.version}</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
         <dependency>
@@ -70,6 +71,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

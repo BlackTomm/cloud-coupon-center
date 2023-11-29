@@ -22,14 +22,14 @@ CREATE TABLE IF NOT EXISTS `geekbang_coupon_db`.`coupon_template`
 DROP TABLE if exists `geekbang_coupon_db`.`coupon`;
 CREATE TABLE IF NOT EXISTS `geekbang_coupon_db`.`coupon`
 (
-    `id`           int(11)    NOT NULL AUTO_INCREMENT COMMENT 'ID',
-    `coupon_id`  varchar(20)    NOT NULL DEFAULT '0' COMMENT '券 id',
+#     `id`           int(11)    NOT NULL AUTO_INCREMENT COMMENT 'ID',
+    `coupon_id`  int(20)    NOT NULL AUTO_INCREMENT COMMENT '券 id',
     `template_id`  int(20)    NOT NULL DEFAULT '0' COMMENT '模版 id',
-    `user_id`      bigint(20) NOT NULL DEFAULT '0' COMMENT '拥有这张券的用户ID',
+    `user_id`      varchar(64) NOT NULL DEFAULT '0' COMMENT '拥有这张券的用户ID',
     `created_time` datetime   NOT NULL DEFAULT '2021-12-13 00:00:00' COMMENT '领券时间',
     `coupon_status`       int(2)     NOT NULL DEFAULT '0' COMMENT '优惠券的状态，比如未用，已用',
     `shop_id`      bigint(20) COMMENT '冗余字段，方便查找',
-    PRIMARY KEY (`id`),
+    PRIMARY KEY (`coupon_id`),
     KEY `coupon_id` (`coupon_id`),
     KEY `idx_user_id` (`user_id`),
     KEY `idx_template_id` (`template_id`)
