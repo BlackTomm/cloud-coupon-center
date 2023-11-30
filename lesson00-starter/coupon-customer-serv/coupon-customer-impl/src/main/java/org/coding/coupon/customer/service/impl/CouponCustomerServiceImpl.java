@@ -125,20 +125,20 @@ public class CouponCustomerServiceImpl implements CouponCustomerService {
                 .build();
 
         //创建时间降序
-        Sort sort = Sort.by(Sort.Direction.DESC, "createTime");
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdTime");
         Pageable pageable = PageRequest.of(searchCoupponParam.getPage(), searchCoupponParam.getPageSize(), sort);
 
 //        List<Coupon> coupons = couponCustomerDao.findAllCoupons(Example.of(coupon), pageable);
         List<Coupon> coupons = couponCustomerDao.findAll(Example.of(coupon), pageable).get().collect(Collectors.toList());
 
         //查询模版信息
-        Set<Long> templateIds = coupons.stream().map(Coupon::getTemplateId).collect(Collectors.toSet());
+//        Set<Long> templateIds = coupons.stream().map(Coupon::getTemplateId).collect(Collectors.toSet());
+        String ids = coupons.stream().map(Coupon::getTemplateId).map(String::valueOf).distinct().collect(Collectors.joining(","));
         Map<Long, CouponTemplateInfo> templateInfoMap =webClientBuilder.build()
-                .post()
-                .uri("http://coupon-template-serv/templater/batchLoadTemplate")
-                .bodyValue(templateIds)
+                .get()
+                .uri("http://coupon-template-serv/template/batchLoadTemplate?ids="+ids)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<Map<Long, CouponTemplateInfo>>(){})
+                .bodyToMono(new ParameterizedTypeReference<Map<Long, CouponTemplateInfo>>() {})
                 .block();
 
         coupons.forEach(couponVO-> {

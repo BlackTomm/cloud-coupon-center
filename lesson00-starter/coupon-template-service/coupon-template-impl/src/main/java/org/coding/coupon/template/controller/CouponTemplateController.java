@@ -44,7 +44,7 @@ public class CouponTemplateController {
         return couponTemplateService.loadTemplateInfo(templateId);
     }
 
-    @PostMapping("/batchLoadTemplate")
+    @GetMapping("/batchLoadTemplate")
     public Map<Long, CouponTemplateInfo> batchLoadTemplate(@RequestParam("ids") Collection<Long> ids) {
         try {
             log.info("getTemplateInBatch: {}", new ObjectMapper().writeValueAsString(ids));
