@@ -31,10 +31,16 @@ public class CouponCustomerServiceImplTest {
     public void sendCouponTest() {
         SendCouponParam sendCouponParam = new SendCouponParam();
         sendCouponParam.setTemplateId(3);
-        sendCouponParam.setUserId("test1");
+        sendCouponParam.setUserId("test3");
+        sendCouponParam.setTrafficVersion("forcebot");
 
         Coupon coupon = couponCustomerService.sendCoupons(sendCouponParam);
-        System.out.println("coupon = " + JSON.toJSON(coupon));
+        System.out.println("forcebot coupon = " + JSON.toJSON(coupon));
+
+
+        sendCouponParam.setTrafficVersion("");
+        coupon = couponCustomerService.sendCoupons(sendCouponParam);
+        System.out.println("normal coupon = " + JSON.toJSON(coupon));
     }
 
 

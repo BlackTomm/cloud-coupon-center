@@ -37,7 +37,7 @@ spring:
     nacos:
       discovery:
         # Nacos的服务注册地址，可以配置多个，逗号分隔
-        server-addr: localhost:8948,localhost:8951
+        server-addr: localhost:8948
         # 服务注册到Nacos上的名称，一般不用配置
         service: coupon-template-serv
         # nacos客户端向服务端发送心跳的时间间隔，时间单位其实是ms

@@ -8,6 +8,7 @@ import org.coding.coupon.customer.domian.BaseResponse;
 import org.coding.coupon.customer.domian.SearchCoupponParam;
 import org.coding.coupon.customer.domian.SendCouponParam;
 import org.coding.coupon.customer.entity.Coupon;
+import org.coding.coupon.customer.enums.BalanceConstant;
 import org.coding.coupon.customer.enums.CouponStatus;
 import org.coding.coupon.customer.enums.SystemErrorCode;
 import org.coding.coupon.customer.service.CouponCustomerService;
@@ -50,6 +51,7 @@ public class CouponCustomerServiceImpl implements CouponCustomerService {
                 //http get请求
                 .get()
                 .uri("http://coupon-template-serv/template/loadTemplate?id="+sendCouponRequest.getTemplateId())
+                .header(BalanceConstant.TRAFFIC_VERSION.getFlag(),sendCouponRequest.getTrafficVersion())
                 //把出参转化为目标类
                 .retrieve()
                 .bodyToMono(CouponTemplateInfo.class)
