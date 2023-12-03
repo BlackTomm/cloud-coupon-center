@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Create by blacktom on 2023/11/25
  */
 @SpringBootApplication(scanBasePackages = {"org.coding.coupon.calculation"})
-public class Application {
+public class CalculationApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(CalculationApplication.class, args);
     }
 }

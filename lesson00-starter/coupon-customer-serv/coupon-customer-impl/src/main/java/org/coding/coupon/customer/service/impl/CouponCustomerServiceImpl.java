@@ -15,10 +15,7 @@ import org.coding.coupon.template.domains.CouponInfo;
 import org.coding.coupon.template.domains.CouponTemplateInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -100,7 +97,10 @@ public class CouponCustomerServiceImpl implements CouponCustomerService {
                 .couponId(Long.parseLong(couponId))
                 .couponStatus(CouponStatus.AVAILIABLE)
                 .build();
-        Optional<Coupon> optionalCoupon = couponCustomerDao.findAll(Example.of(couponExample)).stream()
+        ExampleMatcher matcher = ExampleMatcher.matching() // 构建对象
+                .withIgnorePaths("shopId","templateId");
+
+        Optional<Coupon> optionalCoupon = couponCustomerDao.findAll(Example.of(couponExample, matcher)).stream()
                 .findFirst();
         if (!optionalCoupon.isPresent()) {
             response.setDesc(SystemErrorCode.COUPON_DATA_NOT_FOUND.getDesc());
@@ -128,8 +128,12 @@ public class CouponCustomerServiceImpl implements CouponCustomerService {
         Sort sort = Sort.by(Sort.Direction.DESC, "createdTime");
         Pageable pageable = PageRequest.of(searchCoupponParam.getPage(), searchCoupponParam.getPageSize(), sort);
 
+        // 创建匹配器，即规定如何使用查询条件，可忽略部分字段
+        ExampleMatcher matcher = ExampleMatcher.matching() // 构建对象
+                .withIgnorePaths("couponId","templateId");
+
 //        List<Coupon> coupons = couponCustomerDao.findAllCoupons(Example.of(coupon), pageable);
-        List<Coupon> coupons = couponCustomerDao.findAll(Example.of(coupon), pageable).get().collect(Collectors.toList());
+        List<Coupon> coupons = couponCustomerDao.findAll(Example.of(coupon, matcher), pageable).get().collect(Collectors.toList());
 
         //查询模版信息
 //        Set<Long> templateIds = coupons.stream().map(Coupon::getTemplateId).collect(Collectors.toSet());
@@ -141,10 +145,7 @@ public class CouponCustomerServiceImpl implements CouponCustomerService {
                 .bodyToMono(new ParameterizedTypeReference<Map<Long, CouponTemplateInfo>>() {})
                 .block();
 
-        coupons.forEach(couponVO-> {
-            assert templateInfoMap != null;
-            couponVO.setTemplateInfo(templateInfoMap.get(coupon.getTemplateId()));
-        });
+        coupons.forEach(e->e.setTemplateInfo(templateInfoMap.get(e.getTemplateId())));
         return coupons.stream().map(CouponConverter::convertToCoupon).collect(Collectors.toList());
     }
 

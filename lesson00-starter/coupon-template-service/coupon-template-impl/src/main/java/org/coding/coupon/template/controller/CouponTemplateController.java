@@ -1,7 +1,6 @@
 package org.coding.coupon.template.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.coding.coupon.template.domains.CouponTemplateInfo;
 import org.coding.coupon.template.service.CouponTemplateService;
@@ -46,11 +45,7 @@ public class CouponTemplateController {
 
     @GetMapping("/batchLoadTemplate")
     public Map<Long, CouponTemplateInfo> batchLoadTemplate(@RequestParam("ids") Collection<Long> ids) {
-        try {
-            log.info("getTemplateInBatch: {}", new ObjectMapper().writeValueAsString(ids));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        log.info("getTemplateInBatch: {}", JSON.toJSONString(ids));
         return couponTemplateService.getTemplateInfoMap(ids);
     }
 

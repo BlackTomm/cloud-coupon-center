@@ -2,6 +2,7 @@ package org.coding.coupon.customer.service;
 
 import com.alibaba.fastjson.JSON;
 import org.coding.coupon.customer.dao.CouponCustomerDao;
+import org.coding.coupon.customer.domian.BaseResponse;
 import org.coding.coupon.customer.domian.SearchCoupponParam;
 import org.coding.coupon.customer.domian.SendCouponParam;
 import org.coding.coupon.customer.entity.Coupon;
@@ -59,12 +60,21 @@ public class CouponCustomerServiceImplTest {
         searchCoupponParam.setUserId("test1");
         searchCoupponParam.setCouponStatus(CouponStatus.AVAILIABLE.getCode());
         searchCoupponParam.setShopId(100);
-        searchCoupponParam.setPage(1);
+        searchCoupponParam.setPage(0);
         searchCoupponParam.setPageSize(10);
 
         List<CouponInfo> couponInfoList = couponCustomerService.findCoupons(searchCoupponParam);
         System.out.println("couponInfoList = " + JSON.toJSON(couponInfoList));
     }
+
+    @Test
+    public void invalidCouponsTest() {
+        BaseResponse response = couponCustomerService.invalidCoupon("test1", "11");
+        System.out.println("response = " + response);
+    }
+
+
+
 
 
 }
