@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.coding.coupon.caculation.ShoppingComponent;
 import org.coding.coupon.caculation.SimulationResponse;
-import org.coding.coupon.calculation.service.CouponCalculationService;
+import org.coding.coupon.calculation.service.CalculationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class CouponCalculationController {
 
     @Autowired
-    private CouponCalculationService calculationService;
+    private CalculationService calculationService;
 
     /**
      * 计算优惠金额

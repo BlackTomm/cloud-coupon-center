@@ -7,7 +7,7 @@ import org.coding.coupon.template.dao.CouponTemplate;
 import org.coding.coupon.template.domains.CouponTemplateInfo;
 import org.coding.coupon.template.domains.rules.TemplateRule;
 import org.coding.coupon.template.enums.CouponType;
-import org.coding.coupon.template.service.CouponTemplateService;
+import org.coding.coupon.template.api.CouponTemplateService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

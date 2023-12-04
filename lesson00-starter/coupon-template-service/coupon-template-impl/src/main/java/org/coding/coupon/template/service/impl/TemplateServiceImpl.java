@@ -8,7 +8,7 @@ import org.coding.coupon.template.domains.CouponTemplateInfo;
 import org.coding.coupon.template.domains.PagedCouponTemplateInfo;
 import org.coding.coupon.template.domains.TemplateSearchParams;
 import org.coding.coupon.template.enums.CouponType;
-import org.coding.coupon.template.service.CouponTemplateService;
+import org.coding.coupon.template.service.TemplateService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class CouponTemplateServiceImpl implements CouponTemplateService {
+public class TemplateServiceImpl implements TemplateService {
 
     @Autowired
     private CouponTemplateDao couponTemplateDao;
@@ -101,6 +102,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
     }
 
     @Override
+    @Transactional
     public void deleteTemplate(long id) {
         int rows = couponTemplateDao.makeCouponUnavailable(id);
         if (rows ==0) {

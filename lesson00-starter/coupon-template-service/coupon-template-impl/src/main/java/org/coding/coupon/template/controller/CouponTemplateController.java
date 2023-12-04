@@ -3,7 +3,9 @@ package org.coding.coupon.template.controller;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.coding.coupon.template.domains.CouponTemplateInfo;
-import org.coding.coupon.template.service.CouponTemplateService;
+import org.coding.coupon.template.domains.PagedCouponTemplateInfo;
+import org.coding.coupon.template.domains.TemplateSearchParams;
+import org.coding.coupon.template.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +23,7 @@ import java.util.Map;
 @RestController
 public class CouponTemplateController {
     @Autowired
-    private CouponTemplateService couponTemplateService;
+    private TemplateService couponTemplateService;
 
     @PostMapping("createTemplate")
     public CouponTemplateInfo createTemplate(@Valid @RequestBody CouponTemplateInfo couponTemplateInfo) {
@@ -47,6 +49,20 @@ public class CouponTemplateController {
     public Map<Long, CouponTemplateInfo> batchLoadTemplate(@RequestParam("ids") Collection<Long> ids) {
         log.info("getTemplateInBatch: {}", JSON.toJSONString(ids));
         return couponTemplateService.getTemplateInfoMap(ids);
+    }
+
+    // 搜索模板
+    @PostMapping("/search")
+    public PagedCouponTemplateInfo search(@Valid @RequestBody TemplateSearchParams request) {
+        log.info("search templates, payload={}", request);
+        return couponTemplateService.search(request);
+    }
+
+    // 优惠券无效化
+    @DeleteMapping("/deleteTemplate")
+    public void deleteTemplate(@RequestParam("id") Long id){
+        log.info("Load template, id={}", id);
+        couponTemplateService.deleteTemplate(id);
     }
 
 }
