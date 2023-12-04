@@ -42,6 +42,12 @@ public class CouponTemplateController {
     @GetMapping("/loadTemplate")
     public CouponTemplateInfo loadTemplate(@Valid @RequestParam("id") Long templateId) {
         log.info("Load coupon template: id={}", templateId);
+        //openFeign超时时间验证
+//        try {
+//            Thread.sleep(300 );
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         return couponTemplateService.loadTemplateInfo(templateId);
     }
 

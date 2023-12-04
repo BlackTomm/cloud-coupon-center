@@ -31,7 +31,7 @@ public class CouponCustomerServiceImplTest {
     public void sendCouponTest() {
         SendCouponParam sendCouponParam = new SendCouponParam();
         sendCouponParam.setTemplateId(3);
-        sendCouponParam.setUserId("test4");
+        sendCouponParam.setUserId("test6");
         sendCouponParam.setTrafficVersion("forcebot");
 
         Coupon coupon = couponCustomerService.sendCoupons(sendCouponParam);
@@ -78,9 +78,4 @@ public class CouponCustomerServiceImplTest {
         BaseResponse response = couponCustomerService.invalidCoupon("test1", "11");
         System.out.println("response = " + response);
     }
-
-
-
-
-
 }

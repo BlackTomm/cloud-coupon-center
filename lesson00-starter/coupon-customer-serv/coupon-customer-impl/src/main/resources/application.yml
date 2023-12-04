@@ -71,3 +71,19 @@ spring:
 logging:
   level:
     com.broadview.coupon: debug
+    org.coding.coupon.caculation.api: debug
+    org.coding.coupon.template.api: debug
+
+feign:
+  client:
+    config:
+      #全局超时配置
+      default:
+        connect-timeout: 1000
+        read-timeout: 2000
+      #指定服务超时配置，优先级更高
+      coupon-template-serv:
+        connect-timeout: 100
+        read-timeout: 200
+  circuitbreaker:
+    enabled: true

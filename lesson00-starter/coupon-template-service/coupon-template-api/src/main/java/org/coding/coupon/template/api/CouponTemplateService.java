@@ -3,7 +3,7 @@ package org.coding.coupon.template.api;
 import org.coding.coupon.template.domains.CouponTemplateInfo;
 import org.coding.coupon.template.domains.PagedCouponTemplateInfo;
 import org.coding.coupon.template.domains.TemplateSearchParams;
-import org.coding.coupon.template.feign.fallback.CouponTemplateServiceFallback;
+import org.coding.coupon.template.feign.fallback.CouponTemplateServiceFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,9 @@ import java.util.Map;
  * Create by blacktom on 2023/12/04
  */
 @FeignClient(value = "coupon-template-serv", path = "/template",
-        fallback = CouponTemplateServiceFallback.class)
+//        fallback = CouponTemplateServiceFallback.class
+        fallbackFactory = CouponTemplateServiceFallbackFactory.class
+)
 public interface CouponTemplateService {
 
     //创建模版
