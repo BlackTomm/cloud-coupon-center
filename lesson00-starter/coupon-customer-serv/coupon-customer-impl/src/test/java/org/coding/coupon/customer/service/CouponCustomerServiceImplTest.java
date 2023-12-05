@@ -31,7 +31,7 @@ public class CouponCustomerServiceImplTest {
     public void sendCouponTest() {
         SendCouponParam sendCouponParam = new SendCouponParam();
         sendCouponParam.setTemplateId(3);
-        sendCouponParam.setUserId("test6");
+        sendCouponParam.setUserId("test8");
         sendCouponParam.setTrafficVersion("forcebot");
 
         Coupon coupon = couponCustomerService.sendCoupons(sendCouponParam);

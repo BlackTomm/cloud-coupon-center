@@ -16,6 +16,8 @@ import org.coding.coupon.template.api.CouponTemplateService;
 import org.coding.coupon.template.domains.CouponInfo;
 import org.coding.coupon.template.domains.CouponTemplateInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -30,6 +32,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
+@RefreshScope
 public class CouponCustomerServiceImpl implements CouponCustomerService {
     @Autowired
     private CouponTemplateService couponTemplateService;
@@ -43,10 +46,18 @@ public class CouponCustomerServiceImpl implements CouponCustomerService {
     @Autowired
     private WebClient.Builder webClientBuilder;
 
+    @Value("${disableSendCoupon:false}")
+    private Boolean disableSendCoupon;
+
 
 
     @Override
     public Coupon sendCoupons(SendCouponParam sendCouponRequest) {
+        if (disableSendCoupon) {
+            log.info("sendCoupons is disabled now.");
+            return Coupon.builder().couponId(-1).build();
+        }
+
         CouponTemplateInfo couponTemplateInfo = couponTemplateService.loadTemplateInfo(sendCouponRequest.getTemplateId());
 //                webClientBuilder.build()
 //                //http get请求
