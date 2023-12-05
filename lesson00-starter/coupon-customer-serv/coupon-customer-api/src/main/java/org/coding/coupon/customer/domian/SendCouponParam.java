@@ -23,4 +23,7 @@ public class SendCouponParam {
      */
     @NotNull
     private long templateId;
+
+    // Loadbalancer - 用作测试流量打标
+    private String trafficVersion;
 }

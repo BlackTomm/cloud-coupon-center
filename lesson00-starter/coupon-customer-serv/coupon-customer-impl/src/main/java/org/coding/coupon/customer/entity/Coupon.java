@@ -26,13 +26,15 @@ import java.util.Date;
 @Table(name = "coupon")
 public class Coupon {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", nullable = false)
+//    private long id;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private long id;
-
     @Column(name = "coupon_id", nullable = false)
-    private String couponId;
+    private long couponId;
 
     @Column(name = "template_id", nullable = false)
     private long templateId;

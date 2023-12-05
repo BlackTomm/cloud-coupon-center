@@ -11,10 +11,9 @@
     </parent>
 
     <artifactId>coupon-customer-impl</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
@@ -22,38 +21,99 @@
             <groupId>org.coding</groupId>
             <artifactId>coupon-customer-api</artifactId>
             <version>${coupon.client.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.coding</groupId>
             <artifactId>coupon-template-api</artifactId>
             <version>${coupon.client.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.coding</groupId>
             <artifactId>coupon-calculation-api</artifactId>
             <version>${coupon.client.version}</version>
-            <scope>compile</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.coding</groupId>-->
+<!--            <artifactId>coupon-template-impl</artifactId>-->
+<!--            <version>${coupon.client.version}</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.coding</groupId>-->
+<!--            <artifactId>coupon-calculation-impl</artifactId>-->
+<!--            <version>${coupon.client.version}</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.coding</groupId>
-            <artifactId>coupon-template-impl</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.coding</groupId>
-            <artifactId>coupon-calculation-impl</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+
+        <!--负载均衡-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+        <!--webflux使用-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <!--openFeign组件-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!--hystrix组件，模拟降级，引入后超时自动降级 fallback类兜底，未引入时异常为 socket read timeout-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <version>2.2.10.RELEASE</version>
+            <exclusions>
+                <!--移除 ribbon,避免冲突-->
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-netflix-ribbon</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--nacos 动态配置-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <!--读取 bootstrap文件，应用程序上下文引导时加载，优先于 application.yml-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

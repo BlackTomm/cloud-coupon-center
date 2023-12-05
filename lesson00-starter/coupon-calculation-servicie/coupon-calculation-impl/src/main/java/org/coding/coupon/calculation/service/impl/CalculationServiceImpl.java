@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.coding.coupon.caculation.ShoppingComponent;
 import org.coding.coupon.caculation.SimulationResponse;
 import org.coding.coupon.calculation.factory.CouponTemplateFactory;
-import org.coding.coupon.calculation.service.CouponCalculationService;
+import org.coding.coupon.calculation.service.CalculationService;
 import org.coding.coupon.template.RuleTemplate;
 import org.coding.coupon.template.domains.CouponInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.Collections;
  */
 @Slf4j
 @Service
-public class CouponCalculationServiceImpl implements CouponCalculationService {
+public class CalculationServiceImpl implements CalculationService {
     @Autowired
     private CouponTemplateFactory couponProcessorFactory;
 

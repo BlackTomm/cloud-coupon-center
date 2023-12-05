@@ -6,13 +6,12 @@ import org.coding.coupon.template.domains.TemplateSearchParams;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Description:
  * Create by blacktom on 2023/10/30
  */
-public interface CouponTemplateService {
+public interface TemplateService {
 
     //创建模版
     CouponTemplateInfo createTemplate(CouponTemplateInfo templateInfo);

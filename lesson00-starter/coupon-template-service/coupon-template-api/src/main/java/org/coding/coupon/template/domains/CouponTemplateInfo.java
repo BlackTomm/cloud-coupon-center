@@ -3,6 +3,7 @@ package org.coding.coupon.template.domains;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.coding.coupon.template.domains.rules.TemplateRule;
 
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class CouponTemplateInfo {
     private Long id;
 
