@@ -30,8 +30,8 @@ public class CouponCustomerServiceImplTest {
     @Test
     public void sendCouponTest() {
         SendCouponParam sendCouponParam = new SendCouponParam();
-        sendCouponParam.setTemplateId(3);
-        sendCouponParam.setUserId("test8");
+        sendCouponParam.setTemplateId(18);
+        sendCouponParam.setUserId("test9");
         sendCouponParam.setTrafficVersion("forcebot");
 
         Coupon coupon = couponCustomerService.sendCoupons(sendCouponParam);
@@ -63,7 +63,7 @@ public class CouponCustomerServiceImplTest {
     @Test
     public void findAllCouponsTest() {
         SearchCoupponParam searchCoupponParam = new SearchCoupponParam();
-        searchCoupponParam.setUserId("test1");
+        searchCoupponParam.setUserId("test8");
         searchCoupponParam.setCouponStatus(CouponStatus.AVAILIABLE.getCode());
         searchCoupponParam.setShopId(100);
         searchCoupponParam.setPage(0);

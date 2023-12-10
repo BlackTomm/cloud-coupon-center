@@ -37,3 +37,9 @@ build/
 ### Mac OS ###
 .DS_Store
 /.idea/encodings.xml
+/lesson00-starter/*/*/catalina.base_IS_UNDEFINED/*/logs/info/*.log
+/catalina.base_IS_UNDEFINED/*/logs/*.log
+/lesson00-starter/*/*/catalina.base_IS_UNDEFINED/*/logs/warn/*.log
+/lesson00-starter/coupon-template-service/coupon-template-impl/catalina.base_IS_UNDEFINED/coupon-template-serv/logs/warn/*.log
+/lesson00-starter/coupon-customer-serv/coupon-customer-impl/catalina.base_IS_UNDEFINED/coupon-customer-serv/logs/*.log
+/lesson00-starter/coupon-template-service/coupon-template-impl/catalina.base_IS_UNDEFINED/coupon-template-serv/logs/*.log
