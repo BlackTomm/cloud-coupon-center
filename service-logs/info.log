@@ -1,0 +1,11 @@
+2023-12-15 00:20:57,657 INFO org.springframework.boot.StartupInfoLogger [main] Starting Application using Java 1.8.0_152 on onedydemac-mini with PID 34150 (/Volumes/external/ex-documents/program/code/java/spring-cloud/cloud-coupon-center/logtag/target/classes started by onedy in /Volumes/external/ex-documents/program/code/java/spring-cloud/cloud-coupon-center)
+2023-12-15 00:20:57,663 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2023-12-15 00:20:58,605 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2023-12-15 00:20:58,671 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 934 ms
+2023-12-15 00:20:58,896 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2023-12-15 00:20:59,101 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
+2023-12-15 00:20:59,113 INFO org.springframework.boot.StartupInfoLogger [main] Started Application in 2.056 seconds (JVM running for 2.988)
+2023-12-15 00:21:06,334 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-12-15 00:21:06,335 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 1 ms
+2023-12-15 00:21:06,502 INFO org.coding.record.LogTag [http-nio-8080-exec-1] printInvokerLog|in|[7570a3b2-87c8-481e-b516-ac00665bfba7-1]start print log
+2023-12-15 00:21:06,502 INFO org.coding.record.LogTag [http-nio-8080-exec-1] printInvokerLog|out|[7570a3b2-87c8-481e-b516-ac00665bfba7-2]end print log

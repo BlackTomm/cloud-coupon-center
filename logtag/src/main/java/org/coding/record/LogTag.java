@@ -60,10 +60,18 @@ public class LogTag {
         this.classPath = path == null ? UNKNOWN_ATTR + " #" : path + " #";
     }
 
+    /**
+     * 调用完成后，清除当前线程 traceId
+     */
+    public static void resetTraceId() {
+        TRACE_ID.set(null);
+        INDEX.set(new AtomicInteger(DEFAULT_INDEX));
+    }
+
     public void info(String methodName, String useId, Object... logParams) {
         List<String> content = getLoggerContent(logParams);
         for (String con : content) {
-            INFO_LOGGER.info(con);
+            INFO_LOGGER.info(methodName + "|" + useId + "|" + con);
         }
 
     }
@@ -99,4 +107,6 @@ public class LogTag {
         TRACE_ID.set(tid);
         INDEX.set(new AtomicInteger(DEFAULT_INDEX));
     }
+
+
 }

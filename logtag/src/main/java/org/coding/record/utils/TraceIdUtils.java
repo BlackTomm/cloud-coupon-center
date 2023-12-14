@@ -2,6 +2,9 @@ package org.coding.record.utils;
 
 
 import org.coding.record.LogTag;
+import org.springframework.util.StringUtils;
+
+import java.util.UUID;
 
 /**
  * Description:
@@ -9,10 +12,19 @@ import org.coding.record.LogTag;
  */
 public class TraceIdUtils {
     public static void before() {
-        String traceId = getCurrentTId();
+        String traceId = getCurrentTraceId();
+        LogTag.setTraceId(traceId);
     }
 
-    private static String getCurrentTId() {
+    private static String getCurrentTraceId() {
         String traceId= LogTag.getCurrentTraceId();
+        if (!StringUtils.hasText(traceId)) {
+            traceId = UUID.randomUUID().toString();
+        }
+        return traceId;
+    }
+
+    public static void after() {
+        LogTag.resetTraceId();
     }
 }

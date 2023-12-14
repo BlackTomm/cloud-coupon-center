@@ -19,9 +19,12 @@ public class TraceIdInterceptor {
     @Around("@annotation(traceId)")
     public Object doInterceptor(ProceedingJoinPoint proceedingJoinPoint, TraceId traceId) throws Throwable {
         TraceIdUtils.before();
-
-        Object result = proceedingJoinPoint.proceed();
-
-
+        Object result;
+        try {
+            result = proceedingJoinPoint.proceed();
+        } finally {
+            TraceIdUtils.after();
+        }
+        return result;
     }
 }
