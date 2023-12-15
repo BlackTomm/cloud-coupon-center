@@ -41,7 +41,7 @@ public class LogTag {
     private static final Integer DEFAULT_INDEX = 0;
 
     public static LogTag getLogger(Class<?> clazz) {
-        return clazz == null ? getLogger(UNKNOWN_ATTR) : getLogger(clazz.getSimpleName());
+        return clazz == null ? getLogger(UNKNOWN_ATTR) : getLogger(clazz.getName());
     }
 
     public static LogTag getLogger(String path) {
@@ -69,9 +69,10 @@ public class LogTag {
     }
 
     public void info(String methodName, String useId, Object... logParams) {
+        String methodPath = this.classPath + methodName;
         List<String> content = getLoggerContent(logParams);
         for (String con : content) {
-            INFO_LOGGER.info(methodName + "|" + useId + "|" + con);
+            INFO_LOGGER.info(methodPath + "|" + useId + "|" + con);
         }
 
     }

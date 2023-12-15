@@ -8,8 +8,9 @@
         <!--*********************控制台日志***********************-->
         <Console name="consoleAppender" target="SYSTEM_OUT">
             <!--设置日志格式及颜色-->
+            <!-- pattern="%style{%d{ISO8601}}{bright,green} %highlight{%-5level} [%style{%t}{bright,blue}] %style{%C{}}{bright,yellow}: %msg%n%style{%throwable}{red}"-->
             <PatternLayout
-                    pattern="%style{%d{ISO8601}}{bright,green} %highlight{%-5level} [%style{%t}{bright,blue}] %style{%C{}}{bright,yellow}: %msg%n%style{%throwable}{red}"
+                    pattern="%style{%d{ISO8601}}{bright,green} %highlight{%-5level} : %msg%n%style{%throwable}{red}"
                     disableAnsi="false" noConsoleNoAnsi="false"/>
         </Console>
 
@@ -20,7 +21,8 @@
                      filePattern="${LOG_HOME}/$${date:yyyy-MM}/all-%d{yyyy-MM-dd}-%i.log.gz">
             <!--设置日志格式-->
             <PatternLayout>
-                <pattern>%d %p %C{} [%t] %m%n</pattern>
+<!--                <pattern>%d %p %C{} [%t] %m%n</pattern>-->
+                <pattern>%d %p %m%n</pattern>
             </PatternLayout>
             <Policies>
                 <!-- 设置日志文件切分参数 -->
@@ -68,7 +70,8 @@
             </Filters>
             <!--设置日志格式-->
             <PatternLayout>
-                <pattern>%d %p %C{} [%t] %m%n</pattern>
+<!--                <pattern>%d %p %C{} [%t] %m%n</pattern>-->
+                <pattern>%d %p %m%n</pattern>
             </PatternLayout>
             <Policies>
             <!-- 设置日志文件切分参数 -->
