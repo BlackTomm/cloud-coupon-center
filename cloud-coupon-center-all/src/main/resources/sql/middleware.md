@@ -139,3 +139,7 @@ openzipkin/zipkin:2.21.7
 
 
 搭建日志检索系统
+
+### 安装 redis
+
+docker run --privileged=true --name myredis -d -p 6379:6379 redis
